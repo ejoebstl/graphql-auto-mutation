@@ -1,0 +1,34 @@
+{
+  "name": "graphql-auto-mutation",
+  "version": "0.0.1",
+  "description": "Automatically generate JS methods for flat graphql mutations. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "babel --presets es2015 -d dist/ src/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ejoebstl/graphql-auto-mutation.git"
+  },
+  "keywords": [
+    "graphql",
+    "graphcool",
+    "boilerplate",
+    "mutation"
+  ],
+  "author": "Emanuel Jöbstl",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ejoebstl/graphql-auto-mutation/issues"
+  },
+  "homepage": "https://github.com/ejoebstl/graphql-auto-mutation#readme",
+  "dependencies": {
+    "popsicle": "^9.1.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.0",
+    "babel-preset-es2015": "^6.24.0",
+    "mocha": "^3.2.0"
+  }
+}
