@@ -55,11 +55,11 @@ const tweetId = await twitter.createTweet({authorId: userId, text: 'Test Tweet'}
 await twitter.updateTweet({id: tweetId, text: 'New Text for Tweet'})
 ```
 
-Of course, you can also use this tool against your own API!
+Of course, you can also use this tool with your own API!
 
 ## Options
 
-The following options are available:
+The following alternative create calls are available:
 
 ```javascript
 import createMutations from 'graphql-auto-mutation'
@@ -72,7 +72,7 @@ createMutations.withSchemaAndHeaders(url, schema, headers)
 createMutations.withResolverAndSchema(customResolver, headers)
 ```
 
-A custom resolver is essentialy a function which receives the GraphQL parameter as first parameter and all query variables as second parameter. 
+A custom resolver is essentialy a function which receives the GraphQL query as first parameter and all query variables as second parameter. This way, you can use the GraphQL client of your choice. Also unit testing gets very easy. 
 
 ## What is supported?
 
