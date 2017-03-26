@@ -40,7 +40,7 @@ type User {
 
 The graphcool BaaS can automatically create mutations for this schema for us. You can easily try it for yourself, using their awesome [graphql-up tool](https://github.com/graphcool/graphql-up). 
 
-Since the mutations are all exposed in the schema, we can just let `graphql-auto-mutation` utilize the endpoint to generate corresponding function calls. `graphql-auto-mutation` will genrate an object with a function for each mutation specified in the schema. THe function will have the exact same name and accet parameters as an onject. When called, function returns the ID of the mutated node. 
+Since the mutations are all exposed in the schema, we can just let `graphql-auto-mutation` utilize the endpoint to generate corresponding function calls. `graphql-auto-mutation` will generate a function for each mutation specified in the schema. The function will have the same name as the mutation. Parameters are passed inside an object. When called, the function returns a promise which resolves to the ID of the mutated node. 
 
 ```javascript
 import createMutations from 'graphql-auto-mutation'
