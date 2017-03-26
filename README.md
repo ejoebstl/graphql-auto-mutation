@@ -3,9 +3,24 @@
 # graphql-auto-mutation 
 
 Write less, do more. :rocket: 
-Automatically generates functions for mutations specified in a schema. 
 
-### Usage
+Automatically generates functions for mutations specified in a GraphQL schema. 
+
+## Usage
+
+```sh
+npm install --save graphql-auto-mutation
+```
+
+```javascript
+import createMutations from 'graphql-auto-mutation'
+
+const api = createMutations(YOUR_ENDPOINT_URL)
+
+api.myCoolMutation({arg1: '1', arg2: 2})
+```
+
+## Example using graphcool
 
 Please consider the following schema, hosted on [graphcool](https://www.graph.cool/): 
 
@@ -42,7 +57,7 @@ await twitter.updateTweet({id: tweetId, text: 'New Text for Tweet'})
 
 Of course, you can also use this tool against your own API!
 
-#### Options
+## Options
 
 The following options are available:
 
@@ -59,11 +74,11 @@ createMutations.withResolverAndSchema(customResolver, headers)
 
 A custom resolver is essentialy a function which receives the GraphQL parameter as first parameter and all query variables as second parameter. 
 
-### What is supported?
+## What is supported?
 
 At the moment, `graphql-auto-mutation` only supports mutations with scalar input types. Nested mutations are not supported. 
 
-### Why should I use this? 
+## Why should I use this? 
 
 GraphQL is awesome when it comes to querying data. However, when nodes are updated or created, calling mutations requires multiple lines of code. Especially for cool BaaS like [graphcool](https://www.graph.cool/), mutations can be very generic. Developers end up writing similar mutations over and over again. Using this tool, executing a mutation becomes as simple as writing a function call. 
 
