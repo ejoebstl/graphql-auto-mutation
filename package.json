@@ -2,10 +2,11 @@
   "name": "graphql-auto-mutation",
   "version": "0.0.1",
   "description": "Automatically generate JS methods for flat graphql mutations. ",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "mocha --require mocha-babel.js",
-    "compile": "babel -d dist/ src/"
+    "compile": "babel -d dist/ src/",
+    "prepublish": "npm run compile"
   },
   "repository": {
     "type": "git",
