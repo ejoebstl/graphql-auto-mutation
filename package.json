@@ -4,8 +4,8 @@
   "description": "Automatically generate JS methods for flat graphql mutations. ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "compile": "babel --presets es2015 -d dist/ src/"
+    "test": "mocha --require mocha-babel.js",
+    "compile": "babel -d dist/ src/"
   },
   "repository": {
     "type": "git",
@@ -28,7 +28,9 @@
   },
   "devDependencies": {
     "babel-cli": "^6.24.0",
+    "babel-plugin-transform-async-to-generator": "^6.22.0",
     "babel-preset-es2015": "^6.24.0",
+    "babel-preset-stage-0": "^6.22.0",
     "mocha": "^3.2.0"
   }
 }

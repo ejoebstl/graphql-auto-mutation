@@ -1,17 +1,18 @@
-import popsicle from 'popsicle'
+const popsicle = require('popsicle')
 
-export default async function defaultQueryResolverFactory(endpoint, headers) {
+export default function createQueryResolver(endpoint, headers) {
   // Create query resolver function
-  return function(query, vars) {
+  return async function(query, vars) {
     // For default, we're using raw HTTP and rely on the server for validation. 
     const res = await popsicle.request({
       method: 'POST',
-      url: endoint,
-      headers: headers || { }
+      url: endpoint,
+      headers: headers || { },
       body: {
         query: query,
         variables: vars || { }
-      }.use(popsicle.plugins.parse('json'))
+      }
+    }).use(popsicle.plugins.parse('json'))
 
     if(res.status != 200) {
       throw new Error(`Query error: Server respondend with ${res.status}`)

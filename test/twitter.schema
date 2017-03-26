@@ -1,0 +1,11 @@
+type Tweet {
+  id: ID!
+  text: String!
+  author: User! @relation(name: "Tweets")
+}
+ 
+type User {
+  id: ID!
+  name: String!
+  tweets: [Tweet!]! @relation(name: "Tweets")
+}

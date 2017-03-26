@@ -50,7 +50,7 @@ function createMutationFunction(queryResolver, mutationObject) {
 
       return {
         name: field.name,
-        type: field.type.ofType.name + (field.type.kind == 'NON_NULL' ? '!' : '')
+        type: (field.type.name || field.type.ofType.name) + (field.type.kind == 'NON_NULL' ? '!' : '')
       }
     })
 
@@ -62,26 +62,26 @@ function createMutationFunction(queryResolver, mutationObject) {
       `mutation dynamic_mutation(
         ${varDecl}
       ) {
-        resultId: ${mutationObject.name}(
+        resultId: ${mutationObject.name} (
           ${varAssignment}
         ) {
           id
         }
-      }
+      }`
 
     // Execute and return id
     return (await queryResolver(mutation, args)).resultId.id
   }
 }
 
-export function createMutationObjectFromSchema(schema) {
+export function createMutationObjectFromSchema(queryResolver, schema) {
   const mutations = schema.mutationType.fields
 
   let o = {}
 
   mutations.forEach((m) => {
     o[m.name] = createMutationFunction(queryResolver, m)
-  }
+  })
 
   return o
 }
@@ -89,6 +89,6 @@ export function createMutationObjectFromSchema(schema) {
 export async function createMutationObject(queryResolver) {
   const schema = await fetchSchema(queryResolver)
 
-  return createMutationObjectFromSchema(schema)
+  return createMutationObjectFromSchema(queryResolver, schema)
 }
 
