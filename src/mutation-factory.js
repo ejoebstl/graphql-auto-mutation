@@ -37,11 +37,11 @@ function createMutationFunction(queryResolver, mutationObject) {
     const extraArgs = Object.keys(args).filter(a => mutationObject.args.filter(x => a == x.name).length == 0) 
 
     if(missingArgs.length > 0) {
-      throw new Error('The following arguments are missing: ' + missingArgs.map(a => a.name).join(' ,'))
+      throw new Error('The following arguments are missing: ' + missingArgs.map(a => a.name).join(', '))
     }
 
     if(extraArgs.length > 0) {
-      throw new Error('The following extra arguments were passed: ' + extraArgs.join(' ,'))
+      throw new Error('The following extra arguments were passed: ' + extraArgs.join(', '))
     }
     
     // Combine our input object with the schema types

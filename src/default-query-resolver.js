@@ -14,11 +14,13 @@ export default function createQueryResolver(endpoint, headers) {
       }
     })
 
+    if(res.status != 200) {
+      throw new Error(`Query error: Server respondend with ${res.status}, the response body is: ${res.body}`)
+    }
+    
     const rbody = JSON.parse(res.body)
 
-    if(res.status != 200) {
-      throw new Error(`Query error: Server respondend with ${res.status}`)
-    } else if(rbody.error) {
+    if(rbody.error) {
       throw new Error(`Query error: ${rbody.error.message}`)
     } else if(rbody.errors) {
       throw new Error(`Query errors: ${rbody.errors.map((x) => x.message).join('\n')}`)
