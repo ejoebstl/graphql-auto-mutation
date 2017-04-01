@@ -12,15 +12,20 @@ export default function createQueryResolver(endpoint, headers) {
         query: query,
         variables: vars || { }
       }
-    }).use(popsicle.plugins.parse('json'))
+    })
+
+    const rbody = JSON.parse(res.body)
+
+    console.log(rbody)
 
     if(res.status != 200) {
       throw new Error(`Query error: Server respondend with ${res.status}`)
-    }
-    else if(res.body.error) {
-      throw new Error(`Query error: ${res.body.error.message}`)
+    } else if(rbody.error) {
+      throw new Error(`Query error: ${rbody.error.message}`)
+    } else if(rbody.errors) {
+      throw new Error(`Query errors: ${rbody.errors.map((x) => x.message).join('\n')}`)
     } else {
-      return res.body.data
+      return rbody.data
     }
   }
 }
