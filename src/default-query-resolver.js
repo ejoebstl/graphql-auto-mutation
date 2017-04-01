@@ -16,8 +16,6 @@ export default function createQueryResolver(endpoint, headers) {
 
     const rbody = JSON.parse(res.body)
 
-    console.log(rbody)
-
     if(res.status != 200) {
       throw new Error(`Query error: Server respondend with ${res.status}`)
     } else if(rbody.error) {
