@@ -15,7 +15,7 @@ export default function createQueryResolver(endpoint, headers) {
     })
 
     if(res.status != 200) {
-      throw new Error(`Query error: Server respondend with ${res.status}, the response body is: ${res.body}`)
+      throw new Error(`Query error: Server respondend with ${res.status}, the response body is: ${res.body}, the generated query was: ${query}, the variables were: ${JSON.stringify(vars)}`)
     }
     
     const rbody = JSON.parse(res.body)
