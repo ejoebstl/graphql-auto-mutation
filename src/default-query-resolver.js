@@ -25,7 +25,7 @@ export default function createQueryResolver(endpoint, headers) {
           throw new Error(`Query error: Server respondend with ${res.status}, the response body is: ${res.body}, the generated query was: ${query}, the variables were: ${JSON.stringify(vars)}`)
         } else {
           retryCount--
-          continur
+          continue
         }
       }
       

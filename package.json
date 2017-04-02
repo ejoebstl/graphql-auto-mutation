@@ -1,6 +1,6 @@
 {
   "name": "graphql-auto-mutation",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Automatically generate JS methods for flat graphql mutations. ",
   "main": "dist/index.js",
   "scripts": {
