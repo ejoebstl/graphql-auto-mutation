@@ -72,6 +72,8 @@ createMutations.withSchemaAndHeaders(url, schema, headers)
 createMutations.withResolverAndSchema(customResolver, headers)
 ```
 
+The authorization token is your access token, which will be stored in the authorization header. This library will prepend `Bearer ` before setting the header. If you wish to use a different format, set a custom header using the `.withHeaders` method.  
+
 A custom resolver is essentialy a function which receives the GraphQL query as first parameter and all query variables as second parameter. This way, you can use the GraphQL client of your choice. Also unit testing gets very easy. 
 
 ## What is supported?
