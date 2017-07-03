@@ -2,7 +2,7 @@ import { createMutationObjectFromSchema, createMutationObject } from './mutation
 import createQueryResolver from './default-query-resolver'
 
 async function create(endpoint, auth) {
-  return createWithHeaders(endpoint, auth ? { 'Authorization': auth } : { })
+  return createWithHeaders(endpoint, auth ? { 'Authorization': 'Bearer ' + auth } : { })
 }
 
 async function createWithHeaders(endpoint, headers) {
@@ -14,7 +14,7 @@ async function createWithResolver(queryResolver) {
 }
 
 function createWithSchema(endpoint, schema, auth) {
-  return createWithSchemaHeaders(endpoint, schema, auth ? { 'Authorization': auth } : { })
+  return createWithSchemaHeaders(endpoint, schema, auth ? { 'Authorization': 'Bearer ' + auth } : { })
 }
 
 function createWithSchemaAndHeaders(endpoint, schema, headers) {
