@@ -14,7 +14,7 @@ async function createWithResolver(queryResolver) {
 }
 
 function createWithSchema(endpoint, schema, auth) {
-  return createWithSchemaHeaders(endpoint, schema, auth ? { 'Authorization': 'Bearer ' + auth } : { })
+  return createWithSchemaAndHeaders(endpoint, schema, auth ? { 'Authorization': 'Bearer ' + auth } : { })
 }
 
 function createWithSchemaAndHeaders(endpoint, schema, headers) {
@@ -30,5 +30,6 @@ create.withResolver = createWithResolver
 create.withSchema = createWithSchema
 create.withSchemaAndHeaders = createWithSchemaAndHeaders
 create.withResolverAndSchema = createWithResolverAndSchema
+create.getDefaultQueryResolver = createQueryResolver
 
 export default create
