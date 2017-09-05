@@ -67,7 +67,7 @@ import createMutations from 'graphql-auto-mutation'
 createMutations(url, authorizationHeaderToken)
 createMutations.withHeaders(url, headers) 
 createMutations.withResolver(url, customResolver)
-createMutations.withSchema(schema, authorizationHeaderToken)
+createMutations.withSchema(url, schema, authorizationHeaderToken)
 createMutations.withSchemaAndHeaders(url, schema, headers)
 createMutations.withResolverAndSchema(customResolver, headers)
 ```
