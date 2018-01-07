@@ -13,7 +13,16 @@ async function fetchSchema(queryResolver) {
                 kind
                 name
                 ofType {
+                  kind
                   name
+                  ofType{
+                    kind
+                    name
+                    ofType{
+                      kind
+                      name
+                    }
+                  }
                 }
               }
             }
@@ -43,6 +52,19 @@ function createMutationFunction(queryResolver, mutationObject) {
     if(extraArgs.length > 0) {
       throw new Error('The following extra arguments were passed: ' + extraArgs.join(', '))
     }
+
+    const toList = name => `[${name}]`;
+    const toNonNull = name => name + '!';
+    const toIDLTypeName = type => {
+      switch (type.kind) {
+        case 'LIST':
+          return toList(toIDLTypeName(type.ofType));
+        case 'NON_NULL':
+          return toNonNull(toIDLTypeName(type.ofType));
+        default:
+          return type.name;
+      }
+    };
     
     // Combine our input object with the schema types
     const variables = Object.keys(args).map(a => {
@@ -50,7 +72,7 @@ function createMutationFunction(queryResolver, mutationObject) {
 
       return {
         name: field.name,
-        type: (field.type.name || field.type.ofType.name) + (field.type.kind == 'NON_NULL' ? '!' : '')
+        type: toIDLTypeName(field.type)
       }
     })
 
