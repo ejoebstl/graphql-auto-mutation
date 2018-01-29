@@ -13,7 +13,16 @@ async function fetchSchema(queryResolver) {
                 kind
                 name
                 ofType {
+                  kind
                   name
+                  ofType{
+                    kind
+                    name
+                    ofType{
+                      kind
+                      name
+                    }
+                  }
                 }
               }
             }
@@ -27,7 +36,7 @@ async function fetchSchema(queryResolver) {
 }
 
 function createMutationFunction(queryResolver, mutationObject) {
-  return async function(args) {
+  return async function(args, returnFields) {
 
     // Fetch all required arguments
     const nonNullableTypes = mutationObject.args.filter(a => a.type.kind == 'NON_NULL')
@@ -43,6 +52,19 @@ function createMutationFunction(queryResolver, mutationObject) {
     if(extraArgs.length > 0) {
       throw new Error('The following extra arguments were passed: ' + extraArgs.join(', '))
     }
+
+    const toList = name => `[${name}]`;
+    const toNonNull = name => name + '!';
+    const toIDLTypeName = type => {
+      switch (type.kind) {
+        case 'LIST':
+          return toList(toIDLTypeName(type.ofType));
+        case 'NON_NULL':
+          return toNonNull(toIDLTypeName(type.ofType));
+        default:
+          return type.name;
+      }
+    };
     
     // Combine our input object with the schema types
     const variables = Object.keys(args).map(a => {
@@ -50,7 +72,7 @@ function createMutationFunction(queryResolver, mutationObject) {
 
       return {
         name: field.name,
-        type: (field.type.name || field.type.ofType.name) + (field.type.kind == 'NON_NULL' ? '!' : '')
+        type: toIDLTypeName(field.type)
       }
     })
 
@@ -62,15 +84,15 @@ function createMutationFunction(queryResolver, mutationObject) {
       `mutation dynamic_mutation(
         ${varDecl}
       ) {
-        resultId: ${mutationObject.name} (
+        result: ${mutationObject.name} (
           ${varAssignment}
-        ) {
+        ) ${returnFields ? returnFields : `{
           id
-        }
+        }`}
       }`
 
     // Execute and return id
-    return (await queryResolver(mutation, args)).resultId.id
+    return (await queryResolver(mutation, args)).result
   }
 }
 
