@@ -36,7 +36,7 @@ async function fetchSchema(queryResolver) {
 }
 
 function createMutationFunction(queryResolver, mutationObject) {
-  return async function(args) {
+  return async function(args, returnFields) {
 
     // Fetch all required arguments
     const nonNullableTypes = mutationObject.args.filter(a => a.type.kind == 'NON_NULL')
@@ -84,15 +84,15 @@ function createMutationFunction(queryResolver, mutationObject) {
       `mutation dynamic_mutation(
         ${varDecl}
       ) {
-        resultId: ${mutationObject.name} (
+        result: ${mutationObject.name} (
           ${varAssignment}
-        ) {
+        ) ${returnFields ? returnFields : `{
           id
-        }
+        }`}
       }`
 
     // Execute and return id
-    return (await queryResolver(mutation, args)).resultId.id
+    return (await queryResolver(mutation, args)).result
   }
 }
 
